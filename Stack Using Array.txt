@@ -1,0 +1,92 @@
+#include <iostream>
+using namespace std;
+
+#define MAX 100
+
+int stackArr[MAX];
+int top = -1;
+
+// Push
+void push()
+{
+    int value;
+
+    if (top == MAX - 1)
+    {
+        cout << "Stack Overflow!\\n";
+        return;
+    }
+
+    cout << "Enter element: ";
+    cin >> value;
+
+    top++;
+    stackArr[top] = value;
+
+    cout << value << " pushed into stack.\\n";
+}
+
+// Pop
+void pop()
+{
+    if (top == -1)
+    {
+        cout << "Stack Underflow!\\n";
+        return;
+    }
+
+    cout << "Popped element: " << stackArr[top] << endl;
+    top--;
+}
+
+// Display
+void display()
+{
+    if (top == -1)
+    {
+        cout << "Stack is empty!\\n";
+        return;
+    }
+
+    cout << "Stack elements: ";
+    for (int i = top; i >= 0; i--)
+        cout << stackArr[i] << " ";
+
+    cout << endl;
+}
+
+int main()
+{
+    int choice;
+
+    do
+    {
+        cout << "\\n===== STACK MENU =====\\n";
+        cout << "1. Push\\n";
+        cout << "2. Pop\\n";
+        cout << "3. Display\\n";
+        cout << "4. Exit\\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice)
+        {
+            case 1:
+                push();
+                break;
+            case 2:
+                pop();
+                break;
+            case 3:
+                display();
+                break;
+            case 4:
+                cout << "Exiting...\\n";
+                break;
+            default:
+                cout << "Invalid choice!\\n";
+        }
+    } while (choice != 4);
+
+    return 0;
+}

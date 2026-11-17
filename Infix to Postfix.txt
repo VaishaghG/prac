@@ -1,0 +1,73 @@
+#include <iostream>
+#include <string>
+#include <cctype>
+using namespace std;
+
+char stackArr[100];
+int top = -1;
+
+void push(char x)
+{
+    stackArr[++top] = x;
+}
+
+char pop()
+{
+    return stackArr[top--];
+}
+
+int precedence(char x)
+{
+    if (x == '^')
+        return 3;
+    else if (x == '*' || x == '/' || x == '%')
+        return 2;
+    else if (x == '+' || x == '-')
+        return 1;
+    else
+        return 0;
+}
+
+int main()
+{
+    string infix;
+
+    cout << "Enter an infix expression: ";
+    getline(cin, infix);
+
+    cout << "Postfix expression: ";
+
+    for (int i = 0; i < infix.length(); i++)
+    {
+        char symbol = infix[i];
+
+        if (isspace(symbol))
+            continue;
+
+        if (isalnum(symbol))
+            cout << symbol;
+        else if (symbol == '(')
+            push(symbol);
+        else if (symbol == ')')
+        {
+            while (top != -1 && stackArr[top] != '(')
+                cout << pop();
+
+            if (top != -1)
+                pop();
+        }
+        else
+        {
+            while (top != -1 && stackArr[top] != '(' &&
+                   precedence(stackArr[top]) >= precedence(symbol))
+                cout << pop();
+
+            push(symbol);
+        }
+    }
+
+    while (top != -1)
+        cout << pop();
+
+    return 0;
+}

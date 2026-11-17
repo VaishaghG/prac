@@ -1,0 +1,90 @@
+#include <iostream>
+using namespace std;
+
+struct Node
+{
+    int data;
+    int priority;
+    Node* next;
+};
+
+Node* front = NULL;
+
+// Insert according to priority (smaller number = higher priority)
+void insert(int value, int p)
+{
+    Node* newNode = new Node;
+    newNode->data = value;
+    newNode->priority = p;
+    newNode->next = NULL;
+
+    if (front == NULL || p < front->priority)
+    {
+        newNode->next = front;
+        front = newNode;
+    }
+    else
+    {
+        Node* current = front;
+
+        while (current->next != NULL &&
+               current->next->priority <= p)
+            current = current->next;
+
+        newNode->next = current->next;
+        current->next = newNode;
+    }
+}
+
+// Delete highest priority element
+void deleteElement()
+{
+    if (front == NULL)
+    {
+        cout << "Priority Queue is empty!" << endl;
+        return;
+    }
+
+    Node* current = front;
+    cout << "Deleted element: " << current->data << endl;
+
+    front = front->next;
+    delete current;
+}
+
+// Display the priority queue
+void display()
+{
+    if (front == NULL)
+    {
+        cout << "Priority Queue is empty!" << endl;
+        return;
+    }
+
+    Node* current = front;
+    cout << "Priority Queue:" << endl;
+
+    while (current != NULL)
+    {
+        cout << "Data: " << current->data
+             << "  Priority: " << current->priority << endl;
+        current = current->next;
+    }
+}
+
+int main()
+{
+    insert(10, 2);
+    insert(20, 1);
+    insert(30, 3);
+    insert(40, 2);
+
+    display();
+
+    deleteElement();
+
+    cout << "\\nAfter deletion:" << endl;
+    display();
+
+    return 0;
+}

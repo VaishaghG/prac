@@ -1,0 +1,83 @@
+#include <iostream>
+#include <stack>
+#include <string>
+#include <cctype>
+using namespace std;
+
+int main()
+{
+    string postfix;
+    stack<int> s;
+
+    cout << "Enter postfix expression: ";
+    cin >> postfix;
+
+    for (int i = 0; i < postfix.length(); i++)
+    {
+        char symbol = postfix[i];
+
+        if (isdigit(symbol))
+        {
+            s.push(symbol - '0');
+        }
+        else
+        {
+            if (s.size() < 2)
+            {
+                cout << "Invalid postfix expression";
+                return 0;
+            }
+
+            int operand2 = s.top();
+            s.pop();
+
+            int operand1 = s.top();
+            s.pop();
+
+            int result;
+
+            switch (symbol)
+            {
+                case '+':
+                    result = operand1 + operand2;
+                    break;
+                case '-':
+                    result = operand1 - operand2;
+                    break;
+                case '*':
+                    result = operand1 * operand2;
+                    break;
+                case '/':
+                    if (operand2 == 0)
+                    {
+                        cout << "Division by zero";
+                        return 0;
+                    }
+                    result = operand1 / operand2;
+                    break;
+                case '%':
+                    if (operand2 == 0)
+                    {
+                        cout << "Division by zero";
+                        return 0;
+                    }
+                    result = operand1 % operand2;
+                    break;
+                default:
+                    cout << "Invalid operator";
+                    return 0;
+            }
+
+            s.push(result);
+        }
+    }
+
+    if (s.size() != 1)
+    {
+        cout << "Invalid postfix expression";
+        return 0;
+    }
+
+    cout << "Result = " << s.top();
+    return 0;
+}

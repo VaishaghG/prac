@@ -1,0 +1,32 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+vector<int> adj[5];
+bool visited[5] = {false};
+
+void DFS(int v)
+{
+    visited[v] = true;
+    cout << v << " ";
+
+    for (int u : adj[v])
+    {
+        if (!visited[u])
+            DFS(u);
+    }
+}
+
+int main()
+{
+    adj[0] = {1, 2};
+    adj[1] = {0, 3, 4};
+    adj[2] = {0};
+    adj[3] = {1};
+    adj[4] = {1};
+
+    cout << "DFS Traversal: ";
+    DFS(0);
+
+    return 0;
+}

@@ -1,0 +1,113 @@
+#include <iostream>
+using namespace std;
+
+struct Node
+{
+    int data;
+    Node* next;
+};
+
+Node* front = NULL;
+Node* rear = NULL;
+
+// Enqueue
+void enqueue()
+{
+    int value;
+
+    cout << "Enter the element to insert: ";
+    cin >> value;
+
+    Node* newNode = new Node;
+    newNode->data = value;
+    newNode->next = NULL;
+
+    if (rear == NULL)
+    {
+        front = rear = newNode;
+    }
+    else
+    {
+        rear->next = newNode;
+        rear = newNode;
+    }
+
+    cout << value << " inserted into queue.\\n";
+}
+
+// Dequeue
+void dequeue()
+{
+    if (front == NULL)
+    {
+        cout << "Queue Underflow!\\n";
+        return;
+    }
+
+    Node* current = front;
+    cout << "Element deleted from queue is: "
+         << current->data << endl;
+
+    front = front->next;
+    delete current;
+
+    if (front == NULL)
+        rear = NULL;
+}
+
+// Display
+void display()
+{
+    if (front == NULL)
+    {
+        cout << "Queue is empty!\\n";
+        return;
+    }
+
+    Node* current = front;
+
+    cout << "Queue elements are: ";
+    while (current != NULL)
+    {
+        cout << current->data << " ";
+        current = current->next;
+    }
+
+    cout << endl;
+}
+
+int main()
+{
+    int choice;
+
+    do
+    {
+        cout << "\\n===== QUEUE MENU =====\\n";
+        cout << "1. Enqueue\\n";
+        cout << "2. Dequeue\\n";
+        cout << "3. Display\\n";
+        cout << "4. Exit\\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice)
+        {
+            case 1:
+                enqueue();
+                break;
+            case 2:
+                dequeue();
+                break;
+            case 3:
+                display();
+                break;
+            case 4:
+                cout << "Exiting program.\\n";
+                break;
+            default:
+                cout << "Invalid choice!\\n";
+        }
+    } while (choice != 4);
+
+    return 0;
+}

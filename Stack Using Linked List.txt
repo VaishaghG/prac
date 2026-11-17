@@ -1,0 +1,97 @@
+#include <iostream>
+using namespace std;
+
+struct Node
+{
+    int data;
+    Node* next;
+};
+
+Node* top = NULL;
+
+// Push
+void push(int value)
+{
+    Node* newNode = new Node;
+
+    newNode->data = value;
+    newNode->next = top;
+    top = newNode;
+
+    cout << value << " pushed into stack.\\n";
+}
+
+// Pop
+void pop()
+{
+    if (top == NULL)
+    {
+        cout << "Stack Underflow!\\n";
+        return;
+    }
+
+    Node* current = top;
+    cout << "The popped element is " << current->data << endl;
+
+    top = top->next;
+    delete current;
+}
+
+// Display
+void display()
+{
+    if (top == NULL)
+    {
+        cout << "Stack is empty!\\n";
+        return;
+    }
+
+    Node* current = top;
+
+    cout << "Stack elements are: ";
+    while (current != NULL)
+    {
+        cout << current->data << " ";
+        current = current->next;
+    }
+
+    cout << endl;
+}
+
+int main()
+{
+    int choice, value;
+
+    do
+    {
+        cout << "\\n===== STACK MENU =====\\n";
+        cout << "1. Push\\n";
+        cout << "2. Pop\\n";
+        cout << "3. Display\\n";
+        cout << "4. Exit\\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice)
+        {
+            case 1:
+                cout << "Enter value to be pushed: ";
+                cin >> value;
+                push(value);
+                break;
+            case 2:
+                pop();
+                break;
+            case 3:
+                display();
+                break;
+            case 4:
+                cout << "Exiting...\\n";
+                break;
+            default:
+                cout << "Invalid choice!\\n";
+        }
+    } while (choice != 4);
+
+    return 0;
+}
